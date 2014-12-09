@@ -7,13 +7,18 @@
  */
 public class Brodovii {
 	public static void main(String[] args) {
-		int[][] mat = new int[5][5];
-		int[][] m = new int [5][5];
+		int[][] mat = new int[5][5]; //tabela sa brodovima
+		int[][] m = new int [5][5]; // tabela koja spasava polja i govori da li je polje vec uneseno
+		String[][] ma = new String [5][5]; // tabela koju koristimo za jedno po jedno uneseno polje
+		String[][] ma1 = new String [5][5]; // tabela koju koristimo da pamtimo unesena polja
+		for(int i = 0; i < ma.length; i++)
+			for(int j = 0; j < ma.length; j++)
+				ma[i][j] = " ";
 		mat = napraviMatricu(5, 5);
 		ispisiMatricu(mat);
 		mat = rasporediBrodove(mat);
 		ispisiMatricu(mat);
-		igraj(mat, m);
+		igraj(mat, m, ma, ma1);
 		
 	}
 	/**
@@ -143,29 +148,31 @@ public class Brodovii {
 	 * Ukoliko korisnik pogodi prazno mjesto, igra se nastavlja sve dok se ne pogode svi brodovi
 	 * Na kraju igrice korisnik vidi sa koliko je pokusaja zavrsio igru
 	 * @param mat tabela sa brodovima
+	 * @param m tabela pomocu koje pamtimo jedno polje i provjeravamo da li je korisnik vec unio to polje
+	 * @param ma tabela koju koristimo za jedno polje koje je korisnik unio
+	 * @param ma1 prazna tabela u kojoj pamtimo korisnikova unesena polja
 	 */
-	public static void igraj(int[][] mat, int[][] m)
+	public static void igraj(int[][] mat, int[][] m, String[][] ma, String[][] ma1)
 	{
 		int x, y, pokusaj=0, pogodak=0;
 		do{
-			do{ System.out.println("Unesite broj kolone : ");
+			do{ System.out.println("Unesite broj reda : ");
 			x = TextIO.getInt();
-			System.out.println("Unesite broj reda : ");
+			System.out.println("Unesite broj kolone : ");
 			y = TextIO.getInt();
-			ispisiTabelu(x, y, mat);
+			ma1 = napraviTabelu(x, y, mat, ma);
+			ispisiTabelu(ma1);
 			if(provjeraOtvorenogPolja(x, y, mat, m) == true)
 			{
 				System.out.println("To polje ste vec jednom unijeli! Birajte ponovo! ");
 			}
-			
-			
 			else
 				{
 				pokusaj++;
 				if(mat[x][y] == -1) 
 				{
 				pogodak++;
-				System.out.println("Bravo ! Pogodili ste brod! Ostalo vam je jos " + (5-pogodak) + " brodova!");
+				System.out.println("Bravo ! Pogodili ste brod! Ostalo vam je jos " + (5-pogodak) + " broda!");
 				}
 			if(pogodak == 5) System.out.println("Cestitamo! Pobijedili ste! Imali ste " + pokusaj + " pokusaja.");
 			if(mat[x][y] == 0)
@@ -206,39 +213,50 @@ public class Brodovii {
 		return false;
 	}
 	/**
-	 * ispisuje praznu tabelu koja se koristi za igranje
-	 * @param x prva koordinata, broj kolone
-	 * @param y druga koordinata, broj reda
-	 * @param mat vraca tabelu sa unesenim poljem
+	 * funkcija ispisuje tabelu sa unesenim poljima
+	 * @param ma tabela sa poljima
 	 */
-	private static void ispisiTabelu(int x, int y, int[][]  mat) {
-		int broj;
-		String[][] m = new String[mat.length][mat.length];
+	public static void ispisiTabelu(String[][] ma)
+	{
 		System.out.print("   ");
-		for(int i = 0; i < mat.length; i++)
+		for(int i = 0; i < ma.length; i++)
 			System.out.printf(" %2d ", i);
 		System.out.println();
-		for(int i = 0; i < m.length; i++)
+		for(int i = 0; i < ma.length; i++)
 		{
 			System.out.printf(" %d ", i);
 			System.out.print("|");
-		for(int j = 0; j < m[0].length; j++)
-			{
-			
-			m[i][j] = " ";
-			if(i == x && j == y) 
-				{
-				broj = mat[i][j];
-				m[i][j] = "";
-				m[i][j] += broj;
-				}
-			
-			System.out.printf("%2s |", m[i][j]);
-			
-			}
+		for(int j = 0; j < ma.length; j++)
+			System.out.printf("%2s |", ma[i][j]);
 		System.out.println();
 		}
-	System.out.println();
 	}
+	/**
+	 * pravi tabelu koja pamti polja korisnika
+	 * @param x prva koordinata, broj kolone
+	 * @param y druga koordinata, broj reda
+	 * @param mat tabela sa brodovima
+	 * @return ma tabela sa unesenim poljem
+	 */
+	private static String[][] napraviTabelu(int x, int y, int[][]  mat, String[][] ma) {
+		char z = 'X';
+		char z1 = '0';
+		for(int i = 0; i < ma.length; i++)
+		{
+		for(int j = 0; j < ma[0].length; j++)
+			{
+			
+			if(i == x && j == y) 
+				{
+				ma[i][j] = "";
+				if(mat[x][y] == -1)
+					ma[i][j] += z;
+				else
+					ma[i][j] += z1;
+				}
+			}
 		
 	}
+		return ma;
+	}
+}
