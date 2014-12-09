@@ -175,6 +175,14 @@ public class Brodovii {
 			}while(provjeraOtvorenogPolja(x, y, mat, m) == true);
 		}while(pokusaj != 5);
 	}
+	/**
+	 * funkcija pamti unesena polja
+	 * @param x prva koordinata, broj kolone
+	 * @param y druga koordinata, broj reda
+	 * @param mat tabela sa brodovima
+	 * @param m prazna tabela u koju se spasavaju unesena polja
+	 * @return vraca zadano polje 
+	 */
 	public static int matricaSaUnesenimPoljima(int x, int y, int[][] mat, int[][] m)
 	{
 		if(m[x][y] != 2) 
@@ -184,6 +192,14 @@ public class Brodovii {
 		}
 		return m[x][y];
 	}
+	/**
+	 * funkcija provjerava da li je polje vec otvoreno
+	 * @param x prva koordinata, broj kolone
+	 * @param y druga koordinata, broj reda
+	 * @param mat tabela sa brodovima
+	 * @param m prazna tabela u koju se spasavaju unesena polja
+	 * @return true ili false
+	 */
 	public static boolean provjeraOtvorenogPolja(int x, int y, int[][] mat, int[][] m)
 	{
 		if(matricaSaUnesenimPoljima(x, y, mat, m) == 2) return true;
