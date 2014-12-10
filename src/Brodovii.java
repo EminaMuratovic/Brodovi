@@ -2,7 +2,7 @@
  * Igrica Brodovi se igra tako sto racunar napravi 5 random mjesta gdje bi se brodovi napravili i korisnik pogadja mjesta
  * Brodovi se ne mogu doticati i zauzimaju samo jedno mjesto
  * Korisnik unosi jednu po jednu kooordinatu. Prvo broj kolone, pa onda broj reda
- * @author User Emina Muratovic
+ * @author User eminamuratovic
  *
  */
 public class Brodovii {
